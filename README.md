@@ -9,8 +9,8 @@ The **College Commuters App** is a mobile-first platform designed to support col
 ## 👥 Team Members
 
 - Talha Shaikh  
-- Arhmm Darky  
-- Hasssaan Hameedi  
+- Arham Darky  
+- Hassaan Hameedi  
 - Denil Dominic
 
 ## 🎯 Purpose
