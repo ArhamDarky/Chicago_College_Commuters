@@ -37,14 +37,25 @@ function App() {
   const backend = 'http://127.0.0.1:8000';
 
   useEffect(() => {
-    axios.get(`${backend}/cta/routes`)
-      .then(res => setRoutes(res.data['bustime-response'].routes))
-      .catch(err => console.error('Error fetching routes:', err));
-  }, []);
+    axios.get(`${backend}/cta/bus/routes`)
+      .then(res => {
+        const data = res.data?.['bustime-response']?.routes;
+        if (Array.isArray(data)) {
+          setRoutes(data);
+        } else {
+          console.warn('Unexpected format:', res.data);
+          setRoutes([]);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching routes:', err);
+        setRoutes([]);
+      });
+  }, []);  
 
   useEffect(() => {
     if (selectedRoute) {
-      axios.get(`${backend}/cta/directions?rt=${selectedRoute}`)
+      axios.get(`${backend}/cta/bus/directions?rt=${selectedRoute}`)
         .then(res => {
           setDirections(res.data['bustime-response'].directions || []);
           setDirection('');
@@ -63,11 +74,11 @@ function App() {
 
   useEffect(() => {
     if (selectedRoute && direction) {
-      axios.get(`${backend}/cta/stops?rt=${selectedRoute}&direction=${direction}`)
+      axios.get(`${backend}/cta/bus/stops?rt=${selectedRoute}&direction=${direction}`)
         .then(res => setStops(res.data['bustime-response'].stops || []))
         .catch(err => setStops([]));
 
-      axios.get(`${backend}/cta/vehicles?rt=${selectedRoute}`)
+      axios.get(`${backend}/cta/bus/vehicles?rt=${selectedRoute}`)
         .then(res => setVehicles(res.data['bustime-response'].vehicle || []))
         .catch(err => setVehicles([]));
 
@@ -79,7 +90,7 @@ function App() {
 
   const getPredictions = () => {
     if (selectedStop) {
-      axios.get(`${backend}/cta/predictions?stop_id=${selectedStop}&rt=${selectedRoute}`)
+      axios.get(`${backend}/cta/bus/predictions?stop_id=${selectedStop}&rt=${selectedRoute}`)
         .then(res => {
           setPredictions(res.data['bustime-response'].prd || []);
           setPredictionAttempted(true);
