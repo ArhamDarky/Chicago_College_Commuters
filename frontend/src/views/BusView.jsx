@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// ✨ Sleek new bus icon
+// Bus icon
 const busIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/2283/2283984.png',
   iconSize: [35, 35],
@@ -12,7 +12,7 @@ const busIcon = new L.Icon({
   popupAnchor: [0, -35]
 });
 
-// 🧭 Dynamic arrow icon based on bus heading
+// Dynamic arrow icon
 const getArrowIcon = (heading) => {
   return new L.DivIcon({
     className: '',
@@ -22,7 +22,7 @@ const getArrowIcon = (heading) => {
   });
 };
 
-function App() {
+function BusView() {
   const [routes, setRoutes] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState('');
   const [directions, setDirections] = useState([]);
@@ -51,7 +51,7 @@ function App() {
         console.error('Error fetching routes:', err);
         setRoutes([]);
       });
-  }, []);  
+  }, []);
 
   useEffect(() => {
     if (selectedRoute) {
@@ -201,7 +201,7 @@ function App() {
         )
       )}
 
-      {/* Map with user + buses + arrows */}
+      {/* Map */}
       {vehicles.length > 0 && (
         <div style={{ marginTop: '2rem' }}>
           <h3>🗺️ Live Bus Map</h3>
@@ -215,8 +215,6 @@ function App() {
               attribution='&copy; OpenStreetMap contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-
-            {/* Buses with arrow icons */}
             {vehicles.map((bus, idx) => (
               <Marker
                 key={idx}
@@ -229,8 +227,6 @@ function App() {
                 </Popup>
               </Marker>
             ))}
-
-            {/* User marker */}
             {manualLocation.lat && manualLocation.lon && (
               <Marker position={userPosition} icon={busIcon}>
                 <Popup>📍 Your Location</Popup>
@@ -243,4 +239,4 @@ function App() {
   );
 }
 
-export default App;
+export default BusView;
