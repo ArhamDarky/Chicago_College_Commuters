@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// ✨ Sleek new bus icon
+// Bus icon
 const busIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/2283/2283984.png',
   iconSize: [35, 35],
@@ -12,7 +12,7 @@ const busIcon = new L.Icon({
   popupAnchor: [0, -35]
 });
 
-// 🧭 Dynamic arrow icon based on bus heading
+// Dynamic arrow icon
 const getArrowIcon = (heading) => {
   return new L.DivIcon({
     className: '',
@@ -22,7 +22,7 @@ const getArrowIcon = (heading) => {
   });
 };
 
-function App() {
+function BusView() {
   const [routes, setRoutes] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState('');
   const [directions, setDirections] = useState([]);
@@ -37,14 +37,25 @@ function App() {
   const backend = 'http://127.0.0.1:8000';
 
   useEffect(() => {
-    axios.get(`${backend}/cta/routes`)
-      .then(res => setRoutes(res.data['bustime-response'].routes))
-      .catch(err => console.error('Error fetching routes:', err));
+    axios.get(`${backend}/cta/bus/routes`)
+      .then(res => {
+        const data = res.data?.['bustime-response']?.routes;
+        if (Array.isArray(data)) {
+          setRoutes(data);
+        } else {
+          console.warn('Unexpected format:', res.data);
+          setRoutes([]);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching routes:', err);
+        setRoutes([]);
+      });
   }, []);
 
   useEffect(() => {
     if (selectedRoute) {
-      axios.get(`${backend}/cta/directions?rt=${selectedRoute}`)
+      axios.get(`${backend}/cta/bus/directions?rt=${selectedRoute}`)
         .then(res => {
           setDirections(res.data['bustime-response'].directions || []);
           setDirection('');
@@ -63,11 +74,11 @@ function App() {
 
   useEffect(() => {
     if (selectedRoute && direction) {
-      axios.get(`${backend}/cta/stops?rt=${selectedRoute}&direction=${direction}`)
+      axios.get(`${backend}/cta/bus/stops?rt=${selectedRoute}&direction=${direction}`)
         .then(res => setStops(res.data['bustime-response'].stops || []))
         .catch(err => setStops([]));
 
-      axios.get(`${backend}/cta/vehicles?rt=${selectedRoute}`)
+      axios.get(`${backend}/cta/bus/vehicles?rt=${selectedRoute}`)
         .then(res => setVehicles(res.data['bustime-response'].vehicle || []))
         .catch(err => setVehicles([]));
 
@@ -79,7 +90,7 @@ function App() {
 
   const getPredictions = () => {
     if (selectedStop) {
-      axios.get(`${backend}/cta/predictions?stop_id=${selectedStop}&rt=${selectedRoute}`)
+      axios.get(`${backend}/cta/bus/predictions?stop_id=${selectedStop}&rt=${selectedRoute}`)
         .then(res => {
           setPredictions(res.data['bustime-response'].prd || []);
           setPredictionAttempted(true);
@@ -190,7 +201,7 @@ function App() {
         )
       )}
 
-      {/* Map with user + buses + arrows */}
+      {/* Map */}
       {vehicles.length > 0 && (
         <div style={{ marginTop: '2rem' }}>
           <h3>🗺️ Live Bus Map</h3>
@@ -204,8 +215,6 @@ function App() {
               attribution='&copy; OpenStreetMap contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-
-            {/* Buses with arrow icons */}
             {vehicles.map((bus, idx) => (
               <Marker
                 key={idx}
@@ -218,8 +227,6 @@ function App() {
                 </Popup>
               </Marker>
             ))}
-
-            {/* User marker */}
             {manualLocation.lat && manualLocation.lon && (
               <Marker position={userPosition} icon={busIcon}>
                 <Popup>📍 Your Location</Popup>
@@ -232,4 +239,4 @@ function App() {
   );
 }
 
-export default App;
+export default BusView;
