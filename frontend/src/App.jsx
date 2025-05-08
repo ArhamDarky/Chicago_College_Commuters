@@ -7,10 +7,11 @@ function App() {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <header>
-        <button onClick={() => setMode('bus')} style={{ marginRight: '1rem' }}>Bus Mode</button>
+    <header className="mode-buttons">
+        <button onClick={() => setMode('bus')}>Bus Mode</button>
         <button onClick={() => setMode('train')}>Train Mode</button>
-      </header>
+    </header>
+
 
       {mode === 'bus' && <BusView />}
       {mode === 'train' && <TrainView />}

@@ -1,4 +1,7 @@
 import React from 'react';
+import '../Tracker.css';
+
+
 
 function TrainView() {
   return (
