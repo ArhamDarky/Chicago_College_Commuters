@@ -1,0 +1,108 @@
+/* General layout */
+#root {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1f2937;
+    background-color: #f9fafb;
+    text-align: center;
+  }
+  
+  /* Headings */
+  h1 {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Form fields */
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    text-align: left;
+  }
+  
+  select {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #f3f4f6;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Reset button */
+  button.reset-btn {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button.reset-btn:hover {
+    background-color: #d1d5db;
+  }
+  
+  /* Map styling */
+  .map-container {
+    margin-top: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mode-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mode-buttons button {
+    background-color: #4f46e5;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .mode-buttons button:hover {
+    background-color: #3730a3;
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  button {
+    background-color: #4f46e5;
+    color: white;
+    padding: 0.6rem 1.1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #3730a3;
+  }
+  
+  button.get-predictions {
+    margin-top: 0.75rem;
+  }
+  
