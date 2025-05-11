@@ -1,61 +1,56 @@
-# College Commuters App
+# chiCommute
 
-**Helping Chicago college students commute smarter, safer, and more connected.**
+**Helping Chicago commuters navigate transit smarter, faster, and more reliably.**
 
 ## 🚀 Overview
 
-The **College Commuters App** is a mobile-first platform designed to support college students commuting to Chicago-area campuses. Unlike Google Maps or general transit tools, this app tackles the full commuter experience — blending real-time transit data, class schedules, social features, and budget tools into one seamless experience.
+**chiCommute** is a modern, mobile-responsive website built to support daily commuters in Chicago by providing real-time tracking for CTA buses and 'L' trains, with future plans to support Metra lines. Designed for simplicity and reliability, chiCommute makes it easier than ever to plan your trip and stay updated on transit.
 
 ## 👥 Team Members
 
 - Talha Shaikh  
 - Arham Darky  
-- Hassaan Hameedi.  
+- Hassaan Hameedi  
 - Denil Dominic
-
-## 🎯 Purpose
-
-To become the go-to tool for college commuters by addressing their daily transportation and lifestyle needs while fostering a connected student community.
 
 ## 💡 Key Features
 
-- ⏰ **Smart Departure Alerts**: Notifications based on real-time CTA/Metra data so students never miss class.
-- 📅 **Class Schedule Integration**: Syncs with student schedules to plan commute accordingly.
-- 🤝 **Commuter Matching**: Connects students with similar routes for shared rides or networking.
-- 💬 **Campus Survival Tips**: Community-generated tips for navigating school life as a commuter.
-- 💸 **Commute Tracker**: Tracks time and cost of commutes and generates helpful reports.
+- 🚍 **Real-time CTA Bus Tracking**: Select routes, directions, and stops to see live arrival predictions.
+- 🚇 **Live CTA 'L' Train Tracking**: View upcoming train arrivals, line info, and destinations from key stations.
+- 📊 **Integrated Dashboard**: Seamlessly switch between bus and train tracking on a single interface.
+- 📱 **Mobile-Responsive Design**: Access commute data anywhere on any device.
+- 🌆 **Metra Commuter Rail Info**: Placeholder for future Metra support and updates.
 
 ## 🛠️ Tech Stack
 
-- **Front End**: React Native, Tailwind CSS  
-- **Back End**: Node.js, Express  
-- **Database**: Firebase / Firestore  
-- **APIs**: CTA API, Metra API, Google Maps API (fallback)  
-- **Hosting**: Firebase / AWS Amplify  
+- **Framework**: Next.js (App Router)  
+- **Frontend**: React, TypeScript, Tailwind CSS  
+- **UI Components**: ShadCN UI  
+- **Backend**: Node.js via Next.js API Routes  
+- **APIs**: CTA Bus Tracker API, CTA Train Tracker API  
+- **Other Tools**: Genkit (for future AI enhancements)
 
 ## ✅ Functional Requirements
 
-- Real-time departure notifications  
-- Class schedule syncing  
-- Commuter social network  
-- Tip-sharing platform  
-- Commute tracking and analytics  
+- Live bus and train tracking  
+- Mobile-friendly dashboard  
+- Real-time updates with intuitive interface  
+- Reliable performance across browsers and devices  
 
 ## 📈 Non-Functional Requirements
 
-- 🔄 < 1 second response time  
-- 🌐 Offline-friendly for transit zones with poor signal  
-- 🔐 OAuth and encryption for secure data  
-- 🌍 Scalable across all Chicago colleges  
-- 🎯 Core features accessible in ≤ 2 taps  
+- ⚡ Fast response (< 1s)  
+- 🔐 Secure API handling  
+- 🌐 Fully responsive and accessible  
+- 🔄 Easy to maintain and extend  
 
 ## 📌 Future Goals
 
-- Expand to other U.S. commuter schools  
-- Add carpool and rideshare integration  
-- Machine learning for smarter schedule suggestions
+- Add Metra commuter rail data  
+- AI-powered commute insights (via Genkit)  
+- Save favorite stops and routes  
+- Expand beyond Chicago transit systems
 
 ---
 
-> A student commuter’s best friend — on your phone, always a step ahead.
-
+> Your daily commute. Simplified.
