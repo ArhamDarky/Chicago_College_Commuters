@@ -1,0 +1,40 @@
+/* 
+  tracker.css
+  This file is intended for custom styles for BusView and TrainView components.
+*/
+
+.bus-view-container,
+.train-view-container {
+  /* Example: Add a subtle animation on load */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.map-placeholder {
+  border: 2px dashed hsl(var(--border)); /* Use theme variable for border */
+  transition: transform 0.3s ease;
+}
+
+.map-placeholder:hover {
+  transform: scale(1.02);
+}
+
+/* Example of specific styling for cards within the tracker views */
+.bus-view-card .card-title {
+  color: hsl(var(--primary)); /* Use theme primary color for titles in bus view card */
+}
+
+.train-view-card .card-title {
+  color: hsl(var(--accent)); /* Use theme accent color for titles in train view card */
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
