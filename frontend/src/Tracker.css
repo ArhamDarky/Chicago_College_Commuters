@@ -1,108 +1,135 @@
-/* General layout */
-#root {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #1f2937;
-    background-color: #f9fafb;
-    text-align: center;
-  }
-  
-  /* Headings */
-  h1 {
-    font-size: 2.4rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* Form fields */
-  label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: block;
-    text-align: left;
-  }
-  
-  select {
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background-color: #f3f4f6;
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  /* Reset button */
-  button.reset-btn {
-    background-color: #e5e7eb;
-    color: #1f2937;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  button.reset-btn:hover {
-    background-color: #d1d5db;
-  }
-  
-  /* Map styling */
-  .map-container {
-    margin-top: 2rem;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .mode-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .mode-buttons button {
-    background-color: #4f46e5;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .mode-buttons button:hover {
-    background-color: #3730a3;
-  }
-  
-  .form-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  button {
-    background-color: #4f46e5;
-    color: white;
-    padding: 0.6rem 1.1rem;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  button:hover {
-    background-color: #3730a3;
-  }
-  
-  button.get-predictions {
-    margin-top: 0.75rem;
-  }
-  
+/* =============================
+   ChiCommute App CSS
+   ============================= */
+
+:root {
+  --sidebar-bg: #0d253f;
+  --sidebar-text: #ffffff;
+  --sidebar-active-bg: #1f4068;
+  --header-bg: #f4f6f8;
+  --header-text: #2c3e50;
+  --body-bg: #e9ecef;
+  --card-bg: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #64748b;
+  --accent: #1d72b8;
+  --spacing: 1rem;
+  --radius: 8px;
+  --shadow-light: rgba(0, 0, 0, 0.04);
+}
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--body-bg);
+  color: var(--text-primary);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing);
+}
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+.sidebar nav {
+  flex: 1;
+}
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem var(--spacing);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s;
+}
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background-color: var(--sidebar-active-bg);
+}
+.sidebar nav a svg {
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
+}
+
+/* Main area */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background-color: var(--header-bg);
+  padding: var(--spacing) var(--spacing) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 4px var(--shadow-light);
+}
+.header .toggle-dark {
+  font-size: 1.2rem;
+  color: var(--header-text);
+  cursor: pointer;
+}
+
+/* Content wrapper */
+.content-wrapper {
+  overflow-y: auto;
+  padding: var(--spacing);
+}
+
+/* Dashboard Card Example */
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  margin-bottom: var(--spacing);
+  padding: var(--spacing);
+}
+.card img {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing);
+}
+.card h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.card p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Scrollbar (optional) */
+.content-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.content-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--sidebar-active-bg);
+  border-radius: var(--radius);
+}
+.content-wrapper::-webkit-scrollbar-track {
+  background-color: var(--sidebar-bg);
+}
+.content-wrapper::-webkit-scrollbar-track-piece {
+  background-color: var(--sidebar-bg);
+}
