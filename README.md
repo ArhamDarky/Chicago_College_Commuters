@@ -32,17 +32,19 @@
 
 ## ✅ Functional Requirements
 
-- Live bus and train tracking  
-- Mobile-friendly dashboard  
-- Real-time updates with intuitive interface  
-- Reliable performance across browsers and devices  
+- Real-time departure notifications
+- Class / Work schedule syncing
+- Commuter social network
+- Tip-sharing platform
+- Commute tracking and analytics
 
 ## 📈 Non-Functional Requirements
 
-- ⚡ Fast response (< 1s)  
-- 🔐 Secure API handling  
-- 🌐 Fully responsive and accessible  
-- 🔄 Easy to maintain and extend  
+- 🔄 < 1 second response time
+- 🌐 Offline-friendly for transit zones with poor signal
+- 🔐 OAuth and encryption for secure data
+- 🌍 Scalable across all Chicago colleges
+- 🎯 Core features accessible in ≤ 2 taps
 
 ## 📌 Future Goals
 
