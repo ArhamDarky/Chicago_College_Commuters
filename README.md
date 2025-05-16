@@ -43,7 +43,7 @@
 - 🔄 < 1 second response time
 - 🌐 Offline-friendly for transit zones with poor signal
 - 🔐 OAuth and encryption for secure data
-- 🌍 Scalable across all Chicago colleges
+- 🌍 Scalable across all ChicagoLand area
 - 🎯 Core features accessible in ≤ 2 taps
 
 ## 📌 Future Goals
