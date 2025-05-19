@@ -22,7 +22,7 @@ export default function HomePage() {
         Your one-stop solution for tracking Chicago's buses and trains in real-time. Get to your destination smarter and faster.
       </p>
       <div className="mt-10">
-        <Link href="/dashboard" passHref>
+        <Link href="/dashboard" passHref legacyBehavior>
           <Button size="lg" className="text-lg px-8 py-6 shadow-md">
             Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
           </Button>

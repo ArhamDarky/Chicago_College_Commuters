@@ -39,7 +39,7 @@ export function AppHeader() {
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           </Button>
         ) : (
-          <div className="h-10 w-10" /> // Placeholder to prevent layout shift
+          (<div className="h-10 w-10" />) // Placeholder to prevent layout shift
         )}
         {/* Other header items like user avatar can go here */}
       </div>

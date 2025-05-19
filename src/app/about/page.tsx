@@ -54,7 +54,6 @@ export default function AboutPage() {
         <Info className="h-8 w-8 text-primary" />
         <h1 className="text-3xl font-bold tracking-tight text-primary">About ChiCommute</h1>
       </div>
-      
       <Card className="shadow-lg overflow-hidden">
         <CardHeader className="bg-card-foreground/5 p-6">
           <div className="flex items-center space-x-3">
@@ -82,7 +81,6 @@ export default function AboutPage() {
           </CardDescription>
         </CardContent>
       </Card>
-
       <Card className="shadow-lg">
         <CardHeader className="bg-card-foreground/5 p-6">
           <div className="flex items-center space-x-3">
@@ -109,7 +107,12 @@ export default function AboutPage() {
                   <GraduationCap className="h-4 w-4 mr-2 text-primary/70" />
                   <span>{member.major}</span>
                 </div>
-                <Link href={member.linkedinUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
+                <Link
+                  href={member.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2"
+                  legacyBehavior>
                   <Button variant="outline" size="sm" className="text-primary border-primary hover:bg-primary/10">
                     <Linkedin className="h-4 w-4 mr-2" />
                     LinkedIn
@@ -120,7 +123,6 @@ export default function AboutPage() {
           ))}
         </CardContent>
       </Card>
-
       <div className="grid md:grid-cols-2 gap-8">
         <Card className="shadow-md">
           <CardHeader className="p-6">

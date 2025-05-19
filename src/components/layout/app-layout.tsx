@@ -1,7 +1,20 @@
 import type React from 'react';
+import Link from 'next/link';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from './app-sidebar';
-import { AppHeader } from './app-header';
+
+export function AppHeader() {
+  return (
+    <header>
+      <Link href="/" legacyBehavior>
+        <a className="block">
+          <h1>My App</h1>
+          <p>Welcome!</p>
+        </a>
+      </Link>
+    </header>
+  );
+}
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
