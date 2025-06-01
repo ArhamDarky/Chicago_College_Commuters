@@ -14,12 +14,18 @@ export function AppHeader() {
   // For this exercise, I'll make a simplified version that doesn't rely on next-themes immediately to avoid new deps.
   // const { theme, setTheme } = useTheme();
 
+  const { theme, setTheme } = useTheme();
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  if (!mounted) return null;
+
   // A simple placeholder for theme toggle if next-themes is not used
   const toggleThemePlaceholder = () => {
-    console.log("Theme toggle clicked - integrate with a theme provider like next-themes");
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+
+    //console.log("Theme toggle clicked - integrate with a theme provider like next-themes");
     // Example: document.documentElement.classList.toggle('dark');
   };
 
