@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] py-12 px-4 text-center">
       <Image 
-        src="https://picsum.photos/seed/chicago/300/200" 
+        src="https://images.pexels.com/photos/1093880/pexels-photo-1093880.jpeg" 
         alt="Chicago Skyline" 
         width={300} 
         height={200} 
