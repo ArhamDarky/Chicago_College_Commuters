@@ -27,32 +27,30 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" variant="sidebar" side="left">
       <SidebarHeader className="p-4">
-        <Link href="/" legacyBehavior>
-          <a className="flex items-center gap-2">
-            <Wind className="h-8 w-8 text-sidebar-primary" />
-            <span className="text-xl font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
-              ChiCommute
-            </span>
-          </a>
+        <Link href="/" className="flex items-center gap-2">
+          <Wind className="h-8 w-8 text-sidebar-primary" />
+          <span className="text-xl font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
+            ChiCommute
+          </span>
         </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href} legacyBehavior passHref>
-                <a>
-                  <SidebarMenuButton
-                    isActive={pathname === item.href}
-                    className={cn(
-                      'justify-start',
-                      pathname === item.href ? 'bg-sidebar-primary' : ''
-                    )}
-                  >
-                    <item.icon className="h-5 w-5" />
-                    <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
-                  </SidebarMenuButton>
-                </a>
+              <Link 
+                href={item.href} 
+                className={cn(
+                  'justify-start',
+                  pathname === item.href ? 'bg-sidebar-primary' : ''
+                )}
+              >
+                <SidebarMenuButton
+                  isActive={pathname === item.href}
+                >
+                  <item.icon className="h-5 w-5" />
+                  <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
+                </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
           ))}
