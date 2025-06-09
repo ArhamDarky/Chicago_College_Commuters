@@ -4,7 +4,9 @@ import './globals.css';
 import { AppLayout } from '@/components/layout/app-layout';
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from '@vercel/analytics/react';
-import { ThemeProvider } from 'next-themes';  //npm install next-themes
+import { ThemeProvider } from 'next-themes';
+import { AuthProvider } from '@/contexts/auth-context';
+import { ProtectedRoute } from '@/components/auth/protected-route';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,11 +32,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AppLayout>
-            {children}
-          </AppLayout>
-          <Toaster />
-          <Analytics />
+          <AuthProvider>
+            <ProtectedRoute>
+              <AppLayout>
+                {children}
+              </AppLayout>
+            </ProtectedRoute>
+            <Toaster />
+            <Analytics />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
