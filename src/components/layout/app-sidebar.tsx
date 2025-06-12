@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -12,7 +13,7 @@ import {
   SidebarFooter,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Bus, TrainFront, Wind, LogOut, Info, Ticket } from 'lucide-react';
+import { LayoutDashboard, Bus, TrainFront, Wind, LogOut, Info, Ticket, CalendarClock } from 'lucide-react'; // Added CalendarClock
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -20,6 +21,7 @@ const navItems = [
   { href: '/bus', label: 'Bus Tracking', icon: Bus },
   { href: '/train', label: 'Train Tracking', icon: TrainFront },
   { href: '/metra', label: 'Metra Rail', icon: Ticket },
+  { href: '/smart-commute', label: 'Smart Commute', icon: CalendarClock }, // New Item
   { href: '/about', label: 'About', icon: Info },
 ];
 
@@ -72,3 +74,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+
