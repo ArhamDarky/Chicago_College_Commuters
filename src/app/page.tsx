@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] py-12 px-4 text-center">
       <Image 
-        src="https://picsum.photos/seed/chicago/300/200" 
+        src="https://images.pexels.com/photos/1093880/pexels-photo-1093880.jpeg" 
         alt="Chicago Skyline" 
         width={300} 
         height={200} 
@@ -22,11 +22,11 @@ export default function HomePage() {
         Your one-stop solution for tracking Chicago's buses and trains in real-time. Get to your destination smarter and faster.
       </p>
       <div className="mt-10">
-        <Button asChild size="lg" className="text-lg px-8 py-6 shadow-md">
-          <Link href="/dashboard">
+        <Link href="/dashboard" passHref>
+          <Button size="lg" className="text-lg px-8 py-6 shadow-md">
             Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
       <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 max-w-4xl w-full">
         <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">

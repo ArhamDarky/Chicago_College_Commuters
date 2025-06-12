@@ -1,4 +1,9 @@
-// filepath: c:\Users\HP\Documents\DePaul Classes\Chicago_College_Commuters\src\app\api\metra\[endpoint]\route.ts
+console.log('--- DEBUG: TOP OF METRA API ROUTE ---');
+console.log('process.env.METRA_API_KEY:', process.env.METRA_API_KEY);
+console.log('process.env.METRA_API_SECRET:', process.env.METRA_API_SECRET);
+// For more extensive debugging, you could log a portion of process.env, but be careful with sensitive data.
+// console.log('A few process.env keys:', Object.keys(process.env).slice(0, 10));
+
 import { NextResponse } from 'next/server';
 
 const METRA_API_BASE = 'https://gtfsapi.metrarail.com/gtfs';
