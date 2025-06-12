@@ -6,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Ticket, AlertTriangle, Train, RefreshCcw, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MapComponent } from '@/components/ui/dynamic-map';
 
 // Helper Interfaces
 interface ApiTimestamp {
@@ -122,6 +123,8 @@ interface MetraApiTripUpdateEntry {
 interface MetraStation {
   id: string; // e.g., "LAKEFOREST" (use actual GTFS stop_ids)
   name: string; // e.g., "Lake Forest"
+  latitude: number;
+  longitude: number;
 }
 
 interface MetraLine {
@@ -136,141 +139,160 @@ const metraLinesData: MetraLine[] = [
     id: "UP-N", 
     name: "Union Pacific North", 
     stations: [
-      { id: "OTC", name: "Ogilvie Transportation Center" }, 
-      { id: "RAVENSWOOD", name: "Ravenswood" },
-      { id: "EVANSTONMAIN", name: "Evanston Main St" },
-      { id: "WINNETKA", name: "Winnetka" },
-      { id: "HIGHLANDPARK", name: "Highland Park" },
-      { id: "LAKEFOREST", name: "Lake Forest" },
-      { id: "WAUKEGAN", name: "Waukegan" },
-      { id: "KENOSHA", name: "Kenosha" }
+      { id: "OTC", name: "Ogilvie Transportation Center", latitude: 41.8825, longitude: -87.6394 }, 
+      { id: "RAVENSWOOD", name: "Ravenswood", latitude: 41.9578, longitude: -87.6736 },
+      { id: "EVANSTONMAIN", name: "Evanston Main St", latitude: 42.0450, longitude: -87.6839 },
+      { id: "WINNETKA", name: "Winnetka", latitude: 42.1081, longitude: -87.7356 },
+      { id: "HIGHLANDPARK", name: "Highland Park", latitude: 42.1817, longitude: -87.8006 },
+      { id: "LAKEFOREST", name: "Lake Forest", latitude: 42.2581, longitude: -87.8414 },
+      { id: "WAUKEGAN", name: "Waukegan", latitude: 42.3664, longitude: -87.8211 },
+      { id: "KENOSHA", name: "Kenosha", latitude: 42.5847, longitude: -87.8211 }
     ] 
   },
   { 
     id: "MD-N", 
     name: "Milwaukee District North", 
     stations: [
-      { id: "CUS", name: "Chicago Union Station" }, 
-      { id: "WESTERN", name: "Western Ave" },
-      { id: "GRAYLAND", name: "Grayland" },
-      { id: "MORTONGROVE", name: "Morton Grove" },
-      { id: "GLENVIEW", name: "Glenview" },
-      { id: "DEERFIELD", name: "Deerfield" },
-      { id: "LAKEFOREST", name: "Lake Forest" }, // Note: Some stations can be on multiple lines
-      { id: "LIBERTYVILLE", name: "Libertyville" },
-      { id: "FOX LAKE", name: "Fox Lake" }
+      { id: "CUS", name: "Chicago Union Station", latitude: 41.8786, longitude: -87.6397 }, 
+      { id: "WESTERN", name: "Western Ave", latitude: 41.8867, longitude: -87.6867 },
+      { id: "GRAYLAND", name: "Grayland", latitude: 41.9525, longitude: -87.7675 },
+      { id: "MORTONGROVE", name: "Morton Grove", latitude: 42.0397, longitude: -87.7828 },
+      { id: "GLENVIEW", name: "Glenview", latitude: 42.0744, longitude: -87.8117 },
+      { id: "DEERFIELD", name: "Deerfield", latitude: 42.1694, longitude: -87.8453 },
+      { id: "LAKEFOREST", name: "Lake Forest", latitude: 42.2581, longitude: -87.8414 }, // Note: Some stations can be on multiple lines
+      { id: "LIBERTYVILLE", name: "Libertyville", latitude: 42.2889, longitude: -87.9631 },
+      { id: "FOX LAKE", name: "Fox Lake", latitude: 42.3961, longitude: -88.1867 }
     ] 
   },
   { 
     id: "BNSF", 
     name: "BNSF Railway", 
     stations: [
-      { id: "CUS", name: "Chicago Union Station" }, 
-      { id: "CICERO", name: "Cicero" },
-      { id: "LAGRANGE", name: "La Grange Road" },
-      { id: "HINSDALE", name: "Hinsdale" },
-      { id: "DOWNERSGROVE", name: "Downers Grove Main St" },
-      { id: "NAPERVILLE", name: "Naperville" },
-      { id: "AURORA", name: "Aurora" }
-    ] 
+      { id: "AURORA", name: "Aurora", latitude: 41.760556, longitude: -88.320000 },
+      { id: "ROUTE59", name: "Route 59", latitude: 41.770556, longitude: -88.203611 },
+      { id: "NAPERVILLE", name: "Naperville", latitude: 41.771944, longitude: -88.148056 },
+      { id: "LISLE", name: "Lisle", latitude: 41.784167, longitude: -88.080556 },
+      { id: "BELMONT", name: "Belmont", latitude: 41.782222, longitude: -88.033056 },
+      { id: "DOWNERSGROVE", name: "Downers Grove Main St", latitude: 41.788889, longitude: -88.011667 },
+      { id: "FAIRVIEW", name: "Fairview Avenue", latitude: 41.791111, longitude: -88.002500 },
+      { id: "WESTMONT", name: "Westmont", latitude: 41.795000, longitude: -87.975556 },
+      { id: "CLARENDON_HILLS", name: "Clarendon Hills", latitude: 41.797500, longitude: -87.954167 },
+      { id: "WEST_HINSDALE", name: "West Hinsdale", latitude: 41.796944, longitude: -87.944722 },
+      { id: "HINSDALE", name: "Hinsdale", latitude: 41.800556, longitude: -87.937000 },
+      { id: "HIGHLANDS", name: "Highlands", latitude: 41.810556, longitude: -87.919167 },
+      { id: "WESTERN_SPRINGS", name: "Western Springs", latitude: 41.809167, longitude: -87.900556 },
+      { id: "STONE_AVE", name: "Stone Avenue", latitude: 41.804444, longitude: -87.872778 },
+      { id: "LAGRANGE", name: "La Grange Road", latitude: 41.805000, longitude: -87.879167 },
+      { id: "CONGRESS_PARK", name: "Congress Park", latitude: 41.818611, longitude: -87.855278 },
+      { id: "BROOKFIELD", name: "Brookfield", latitude: 41.821389, longitude: -87.846389 },
+      { id: "HOLLYWOOD", name: "Hollywood", latitude: 41.822778, longitude: -87.828056 },
+      { id: "RIVERSIDE", name: "Riverside", latitude: 41.826667, longitude: -87.819722 },
+      { id: "HARLEM", name: "Harlem Avenue", latitude: 41.830556, longitude: -87.807500 },
+      { id: "BERWYN", name: "Berwyn", latitude: 41.833056, longitude: -87.793611 },
+      { id: "LA_VERGNE", name: "La Vergne", latitude: 41.836389, longitude: -87.780556 },
+      { id: "CICERO", name: "Cicero", latitude: 41.844167, longitude: -87.745556 },
+      { id: "BNWESTERN", name: "Western Avenue", latitude: 41.857778, longitude: -87.685278 },
+      { id: "HALSTED", name: "Halsted Street", latitude: 41.860278, longitude: -87.647222 },
+      { id: "CUS", name: "Chicago Union Station", latitude: 41.878889, longitude: -87.638889 }
+    ]
   },
   { 
     id: "ME", 
     name: "Metra Electric", 
     stations: [
-      { id: "MESTD", name: "Millennium Station" }, 
-      { id: "VANDERPOEL", name: "Van Buren St." },
-      { id: "MUSEUM", name: "Museum Campus/11th St." },
-      { id: "MCCORMICK", name: "McCormick Place" },
-      { id: "55-56-57", name: "55th-56th-57th St." },
-      { id: "HYDEPARK", name: "Hyde Park" },
-      { id: "SOUTHSHORE", name: "South Shore" },
-      { id: "BLUEISLAND", name: "Blue Island-Vermont St." },
-      { id: "UNIVERSITY_PARK", name: "University Park" }
+      { id: "MESTD", name: "Millennium Station", latitude: 41.8825, longitude: -87.6247 }, 
+      { id: "VANDERPOEL", name: "Van Buren St.", latitude: 41.8769, longitude: -87.6247 },
+      { id: "MUSEUM", name: "Museum Campus/11th St.", latitude: 41.8661, longitude: -87.6161 },
+      { id: "MCCORMICK", name: "McCormick Place", latitude: 41.8508, longitude: -87.6069 },
+      { id: "55-56-57", name: "55th-56th-57th St.", latitude: 41.7919, longitude: -87.6061 },
+      { id: "HYDEPARK", name: "Hyde Park", latitude: 41.7844, longitude: -87.5906 },
+      { id: "SOUTHSHORE", name: "South Shore", latitude: 41.7569, longitude: -87.5661 },
+      { id: "BLUEISLAND", name: "Blue Island-Vermont St.", latitude: 41.6572, longitude: -87.6806 },
+      { id: "UNIVERSITY_PARK", name: "University Park", latitude: 41.4419, longitude: -87.6889 }
     ]
   },
   {
     id: "RI",
     name: "Rock Island District",
     stations: [
-      { id: "LASALLE", name: "LaSalle Street Station" },
-      { id: "35TH", name: "35th St./'Lou' Jones" },
-      { id: "BRAINERD", name: "Brainerd" },
-      { id: "BLUEISLAND", name: "Blue Island-Vermont St." },
-      { id: "TINLEYPARK", name: "Tinley Park" },
-      { id: "JOLIET", name: "Joliet" }
+      { id: "LASALLE", name: "LaSalle Street Station", latitude: 41.8756, longitude: -87.6314 },
+      { id: "35TH", name: "35th St./'Lou' Jones", latitude: 41.8306, longitude: -87.6061 },
+      { id: "BRAINERD", name: "Brainerd", latitude: 41.7194, longitude: -87.6444 },
+      { id: "BLUEISLAND", name: "Blue Island-Vermont St.", latitude: 41.6572, longitude: -87.6806 },
+      { id: "TINLEYPARK", name: "Tinley Park", latitude: 41.5731, longitude: -87.7931 },
+      { id: "JOLIET", name: "Joliet", latitude: 41.5250, longitude: -88.0817 }
     ]
   },
   {
     id: "MD-W",
     name: "Milwaukee District West",
     stations: [
-      { id: "CUS", name: "Chicago Union Station" },
-      { id: "MARS", name: "Mars" },
-      { id: "FRANKLINPARK", name: "Franklin Park" },
-      { id: "ELMHURST", name: "Elmhurst" },
-      { id: "ITASCA", name: "Itasca" },
-      { id: "ELGIN", name: "Elgin" }
+      { id: "CUS", name: "Chicago Union Station", latitude: 41.8786, longitude: -87.6397 },
+      { id: "MARS", name: "Mars", latitude: 41.8867, longitude: -87.7042 },
+      { id: "FRANKLINPARK", name: "Franklin Park", latitude: 41.9306, longitude: -87.8711 },
+      { id: "ELMHURST", name: "Elmhurst", latitude: 41.8994, longitude: -87.9403 },
+      { id: "ITASCA", name: "Itasca", latitude: 41.9750, longitude: -88.0106 },
+      { id: "ELGIN", name: "Elgin", latitude: 42.0372, longitude: -88.2825 }
     ]
   },
   {
     id: "UP-W",
     name: "Union Pacific West",
     stations: [
-      { id: "OTC", name: "Ogilvie Transportation Center" },
-      { id: "KEDZIE", name: "Kedzie" },
-      { id: "OAKPARK", name: "Oak Park" },
-      { id: "LOMBARD", name: "Lombard" },
-      { id: "WHEATON", name: "Wheaton" },
-      { id: "GENEVA", name: "Geneva" },
-      { id: "ELBURN", name: "Elburn" }
+      { id: "OTC", name: "Ogilvie Transportation Center", latitude: 41.8825, longitude: -87.6394 },
+      { id: "KEDZIE", name: "Kedzie", latitude: 41.8856, longitude: -87.7058 },
+      { id: "OAKPARK", name: "Oak Park", latitude: 41.8719, longitude: -87.7928 },
+      { id: "LOMBARD", name: "Lombard", latitude: 41.8800, longitude: -88.0078 },
+      { id: "WHEATON", name: "Wheaton", latitude: 41.8661, longitude: -88.1070 },
+      { id: "GENEVA", name: "Geneva", latitude: 41.8875, longitude: -88.3053 },
+      { id: "ELBURN", name: "Elburn", latitude: 41.8922, longitude: -88.4728 }
     ]
   },
   {
     id: "SWS",
     name: "SouthWest Service",
     stations: [
-      { id: "CUS", name: "Chicago Union Station" },
-      { id: "WRIGHTWOOD", name: "Wrightwood" },
-      { id: "OAKLAWN", name: "Oak Lawn-Patriot" },
-      { id: "ORLANDPARK", name: "Orland Park 153rd St" },
-      { id: "MANHATTAN", name: "Manhattan" }
+      { id: "CUS", name: "Chicago Union Station", latitude: 41.8786, longitude: -87.6397 },
+      { id: "WRIGHTWOOD", name: "Wrightwood", latitude: 41.8306, longitude: -87.6661 },
+      { id: "OAKLAWN", name: "Oak Lawn-Patriot", latitude: 41.7194, longitude: -87.7544 },
+      { id: "ORLANDPARK", name: "Orland Park 153rd St", latitude: 41.6039, longitude: -87.7839 },
+      { id: "MANHATTAN", name: "Manhattan", latitude: 41.4242, longitude: -87.9856 }
     ]
   },
   {
     id: "HC",
     name: "Heritage Corridor",
     stations: [
-      { id: "CUS", name: "Chicago Union Station" },
-      { id: "SUMMIT", name: "Summit" },
-      { id: "LEMONT", name: "Lemont" },
-      { id: "JOLIET", name: "Joliet" }
+      { id: "CUS", name: "Chicago Union Station", latitude: 41.8786, longitude: -87.6397 },
+      { id: "SUMMIT", name: "Summit", latitude: 41.7889, longitude: -87.8097 },
+      { id: "LEMONT", name: "Lemont", latitude: 41.6731, longitude: -87.9886 },
+      { id: "JOLIET", name: "Joliet", latitude: 41.5250, longitude: -88.0817 }
     ]
   },
   {
     id: "NCS",
     name: "North Central Service",
     stations: [
-      { id: "CUS", name: "Chicago Union Station" },
-      { id: "OHARE", name: "O'Hare Transfer" },
-      { id: "PROSPECTHEIGHTS", name: "Prospect Heights" },
-      { id: "BUFFALOGROVE", name: "Buffalo Grove" },
-      { id: "ANTIOCH", name: "Antioch" }
+      { id: "CUS", name: "Chicago Union Station", latitude: 41.8786, longitude: -87.6397 },
+      { id: "OHARE", name: "O'Hare Transfer", latitude: 41.9786, longitude: -87.8647 },
+      { id: "PROSPECTHEIGHTS", name: "Prospect Heights", latitude: 42.0953, longitude: -87.9375 },
+      { id: "BUFFALOGROVE", name: "Buffalo Grove", latitude: 42.1661, longitude: -87.9597 },
+      { id: "ANTIOCH", name: "Antioch", latitude: 42.4772, longitude: -88.0956 }
     ]
   },
   {
     id: "UP-NW",
     name: "Union Pacific Northwest",
     stations: [
-      { id: "OTC", name: "Ogilvie Transportation Center" },
-      { id: "JEFFERSONPARK", name: "Jefferson Park" },
-      { id: "PARKRIDGE", name: "Park Ridge" },
-      { id: "DESPLAINES", name: "Des Plaines" },
-      { id: "ARLINGTONPARK", name: "Arlington Park" },
-      { id: "BARRINGTON", name: "Barrington" },
-      { id: "CRYSTALLAKE", name: "Crystal Lake" },
-      { id: "MCHENRY", name: "McHenry" }, // Some UP-NW trains go to McHenry, others to Harvard
-      { id: "HARVARD", name: "Harvard" }
+      { id: "OTC", name: "Ogilvie Transportation Center", latitude: 41.8825, longitude: -87.6394 },
+      { id: "JEFFERSONPARK", name: "Jefferson Park", latitude: 41.9706, longitude: -87.7606 },
+      { id: "PARKRIDGE", name: "Park Ridge", latitude: 42.0111, longitude: -87.8406 },
+      { id: "DESPLAINES", name: "Des Plaines", latitude: 42.0333, longitude: -87.8836 },
+      { id: "ARLINGTONPARK", name: "Arlington Park", latitude: 42.0631, longitude: -87.9806 },
+      { id: "BARRINGTON", name: "Barrington", latitude: 42.1539, longitude: -88.1361 },
+      { id: "CRYSTALLAKE", name: "Crystal Lake", latitude: 42.2411, longitude: -88.3161 },
+      { id: "MCHENRY", name: "McHenry", latitude: 42.3331, longitude: -88.2667 }, // Some UP-NW trains go to McHenry, others to Harvard
+      { id: "HARVARD", name: "Harvard", latitude: 42.4197, longitude: -88.6131 }
     ]
   }
   // ... Continue to add all Metra lines and their stations with correct IDs
@@ -509,10 +531,13 @@ export function MetraClient() {
             <CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5" /> Live Map</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64 w-full bg-muted rounded flex items-center justify-center">
-              <p className="text-muted-foreground">Map integration placeholder. Active trains for {metraLinesData.find(l=>l.id === selectedLine)?.name} would show here.</p>
-              {/* TODO: Integrate a map library like React Leaflet here */}
-              {/* Pass filteredPositions to the map component */}
+            <div className="h-[400px] w-full relative z-0">
+              <MapComponent 
+              positions={filteredPositions.map(p => p.vehicle)} 
+              selectedLine={selectedLine}
+              boardingStation={availableStations.find(s => s.id === selectedOnStation) || null}
+              destinationStation={availableStations.find(s => s.id === selectedOffStation) || null}
+              />
             </div>
           </CardContent>
         </Card>
@@ -530,7 +555,7 @@ export function MetraClient() {
             {filteredAlerts.length > 0 && (
               <div className="space-y-4">
                 {filteredAlerts.map((alertItem) => (
-                  <Alert key={alertItem.id} variant={alertItem.alert.effect === 8 /* UNKNOWN_EFFECT or NO_SERVICE or REDUCED_SERVICE etc. */ ? "default" : "warning"}>
+              <Alert key={alertItem.id} variant={alertItem.alert.effect === 8 /* UNKNOWN_EFFECT or NO_SERVICE or REDUCED_SERVICE etc. */ ? "default" : "destructive"}>
                      <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>{alertItem.alert.header_text.translation[0]?.text || 'N/A'}</AlertTitle>
                     <AlertDescription>
